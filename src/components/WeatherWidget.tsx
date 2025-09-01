@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Loader2, MapPin, Thermometer, Droplets, Wind } from 'lucide-react';
 import { weatherService, WeatherData } from '@/services/weatherService';
+import weatherIcons from '@/assets/weather-icons.jpg';
 
 export const WeatherWidget = () => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -46,7 +47,10 @@ export const WeatherWidget = () => {
   }
 
   return (
-    <Card className="bg-gradient-primary shadow-elegant">
+    <Card className="bg-gradient-primary shadow-elegant relative overflow-hidden">
+      <div className="absolute top-2 right-2 opacity-20">
+        <img src={weatherIcons} alt="Weather icons" className="h-16 w-16 object-cover rounded" />
+      </div>
       <CardHeader className="pb-3">
         <CardTitle className="text-primary-foreground flex items-center gap-2">
           <MapPin className="h-5 w-5" />
@@ -85,6 +89,12 @@ export const WeatherWidget = () => {
             <Wind className="h-4 w-4" />
             <span className="text-sm">{Math.round(weather.wind.speed)} m/s</span>
           </div>
+        </div>
+
+        <div className="mt-4 p-3 bg-primary-foreground/10 rounded-lg backdrop-blur-sm">
+          <p className="text-sm text-primary-foreground font-medium text-center">
+            💡 Perfect conditions for your style choices!
+          </p>
         </div>
       </CardContent>
     </Card>

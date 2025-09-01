@@ -4,8 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Plus, Edit, Trash2, MapPin } from 'lucide-react';
+import { Calendar, Plus, Edit, Trash2, MapPin, Tag } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
 import { format, isSameDay, startOfMonth, endOfMonth, eachDayOfInterval, getDay } from 'date-fns';
 
 interface CalendarEvent {
@@ -15,43 +16,47 @@ interface CalendarEvent {
   type: 'work' | 'casual' | 'formal' | 'party' | 'sport' | 'other';
   location?: string;
   description?: string;
+  occasion?: string; // New field for specific occasions
 }
 
 // Mock events for demonstration
 const mockEvents: CalendarEvent[] = [
   {
     id: '1',
-    title: 'Work Meeting',
+    title: 'Business Meeting',
     date: new Date(2024, 8, 15),
     type: 'work',
-    location: 'Office',
-    description: 'Important client presentation'
+    location: 'Office Conference Room',
+    description: 'Quarterly review with clients',
+    occasion: 'Professional presentation'
   },
   {
     id: '2',
-    title: 'Birthday Party',
+    title: 'Wedding Reception',
     date: new Date(2024, 8, 18),
-    type: 'party',
-    location: 'Restaurant',
-    description: "Sarah's birthday celebration"
+    type: 'formal',
+    location: 'Grand Hotel Ballroom',
+    description: "Emma's wedding celebration",
+    occasion: 'Elegant evening event'
   },
   {
     id: '3',
-    title: 'Gym Session',
+    title: 'Weekend Brunch',
     date: new Date(2024, 8, 20),
-    type: 'sport',
-    location: 'Local Gym',
-    description: 'Weekly workout'
+    type: 'casual',
+    location: 'Cafe Sunshine',
+    description: 'Brunch with friends',
+    occasion: 'Relaxed weekend gathering'
   },
 ];
 
 const eventTypeColors = {
-  work: 'bg-blue-100 text-blue-800',
-  casual: 'bg-green-100 text-green-800',
-  formal: 'bg-purple-100 text-purple-800',
-  party: 'bg-pink-100 text-pink-800',
-  sport: 'bg-orange-100 text-orange-800',
-  other: 'bg-gray-100 text-gray-800',
+  work: 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200',
+  casual: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
+  formal: 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200',
+  party: 'bg-pink-100 text-pink-800 dark:bg-pink-900 dark:text-pink-200',
+  sport: 'bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200',
+  other: 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200',
 };
 
 export const CalendarWidget = () => {
@@ -63,6 +68,7 @@ export const CalendarWidget = () => {
     type: 'other' as CalendarEvent['type'],
     location: '',
     description: '',
+    occasion: '',
   });
 
   const monthStart = startOfMonth(currentDate);
@@ -84,9 +90,10 @@ export const CalendarWidget = () => {
         type: newEvent.type,
         location: newEvent.location,
         description: newEvent.description,
+        occasion: newEvent.occasion,
       };
       setEvents([...events, event]);
-      setNewEvent({ title: '', type: 'other', location: '', description: '' });
+      setNewEvent({ title: '', type: 'other', location: '', description: '', occasion: '' });
       setSelectedDate(null);
     }
   };
@@ -101,10 +108,10 @@ export const CalendarWidget = () => {
   return (
     <div className="space-y-6">
       {/* Today's Events */}
-      <Card className="shadow-soft">
+      <Card className="shadow-soft bg-gradient-cool">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-2 text-primary-foreground">
+            <Calendar className="h-5 w-5" />
             Today's Events
           </CardTitle>
         </CardHeader>
@@ -112,13 +119,19 @@ export const CalendarWidget = () => {
           {todaysEvents.length > 0 ? (
             <div className="space-y-3">
               {todaysEvents.map((event) => (
-                <div key={event.id} className="flex items-center justify-between p-3 bg-accent rounded-lg">
+                <div key={event.id} className="flex items-center justify-between p-3 bg-card rounded-lg shadow-soft">
                   <div>
                     <h4 className="font-medium">{event.title}</h4>
                     {event.location && (
                       <p className="text-sm text-muted-foreground flex items-center gap-1">
                         <MapPin className="h-3 w-3" />
                         {event.location}
+                      </p>
+                    )}
+                    {event.occasion && (
+                      <p className="text-sm text-primary flex items-center gap-1 mt-1">
+                        <Tag className="h-3 w-3" />
+                        {event.occasion}
                       </p>
                     )}
                   </div>
@@ -129,7 +142,7 @@ export const CalendarWidget = () => {
               ))}
             </div>
           ) : (
-            <p className="text-muted-foreground">No events scheduled for today</p>
+            <p className="text-primary-foreground/80">No events scheduled for today</p>
           )}
         </CardContent>
       </Card>
@@ -201,7 +214,7 @@ export const CalendarWidget = () => {
                       )}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent>
+                  <DialogContent className="max-w-md">
                     <DialogHeader>
                       <DialogTitle>
                         {format(date, 'EEEE, MMMM d, yyyy')}
@@ -214,11 +227,20 @@ export const CalendarWidget = () => {
                         <div className="space-y-2">
                           <h4 className="font-medium">Events</h4>
                           {dayEvents.map((event) => (
-                            <div key={event.id} className="flex items-center justify-between p-2 bg-accent rounded">
-                              <div>
+                            <div key={event.id} className="flex items-center justify-between p-3 bg-accent rounded-lg">
+                              <div className="flex-1">
                                 <p className="font-medium">{event.title}</p>
                                 {event.location && (
-                                  <p className="text-sm text-muted-foreground">{event.location}</p>
+                                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                                    <MapPin className="h-3 w-3" />
+                                    {event.location}
+                                  </p>
+                                )}
+                                {event.occasion && (
+                                  <p className="text-sm text-primary flex items-center gap-1 mt-1">
+                                    <Tag className="h-3 w-3" />
+                                    {event.occasion}
+                                  </p>
                                 )}
                               </div>
                               <div className="flex items-center gap-2">
@@ -239,7 +261,7 @@ export const CalendarWidget = () => {
                       )}
                       
                       {/* Add new event form */}
-                      <div className="space-y-3">
+                      <div className="space-y-3 border-t pt-4">
                         <h4 className="font-medium">Add Event</h4>
                         <div>
                           <Label htmlFor="event-title">Event Title</Label>
@@ -251,6 +273,16 @@ export const CalendarWidget = () => {
                           />
                         </div>
                         
+                        <div>
+                          <Label htmlFor="event-occasion">Occasion Details</Label>
+                          <Input
+                            id="event-occasion"
+                            value={newEvent.occasion}
+                            onChange={(e) => setNewEvent(prev => ({ ...prev, occasion: e.target.value }))}
+                            placeholder="e.g., Formal dinner, Casual meetup, Business presentation"
+                          />
+                        </div>
+                        
                         <div className="grid grid-cols-2 gap-3">
                           <div>
                             <Label htmlFor="event-type">Type</Label>
@@ -258,7 +290,7 @@ export const CalendarWidget = () => {
                               id="event-type"
                               value={newEvent.type}
                               onChange={(e) => setNewEvent(prev => ({ ...prev, type: e.target.value as CalendarEvent['type'] }))}
-                              className="w-full p-2 border rounded-md"
+                              className="w-full p-2 border rounded-md bg-background"
                             >
                               <option value="work">Work</option>
                               <option value="casual">Casual</option>
@@ -280,7 +312,18 @@ export const CalendarWidget = () => {
                           </div>
                         </div>
                         
-                        <Button onClick={addEvent} className="w-full" disabled={!newEvent.title}>
+                        <div>
+                          <Label htmlFor="event-description">Description</Label>
+                          <Textarea
+                            id="event-description"
+                            value={newEvent.description}
+                            onChange={(e) => setNewEvent(prev => ({ ...prev, description: e.target.value }))}
+                            placeholder="Additional details about the event"
+                            rows={2}
+                          />
+                        </div>
+                        
+                        <Button onClick={addEvent} className="w-full bg-gradient-primary" disabled={!newEvent.title}>
                           <Plus className="h-4 w-4 mr-2" />
                           Add Event
                         </Button>

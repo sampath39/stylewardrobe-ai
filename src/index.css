@@ -8,44 +8,45 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 28 100% 98%;
-    --foreground: 343 15% 15%;
+    --background: 210 20% 98%;
+    --foreground: 215 25% 27%;
 
     --card: 0 0% 100%;
-    --card-foreground: 343 15% 15%;
+    --card-foreground: 215 25% 27%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 343 15% 15%;
+    --popover-foreground: 215 25% 27%;
 
-    --primary: 12 88% 70%;
+    --primary: 200 80% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 88 25% 85%;
-    --secondary-foreground: 343 15% 15%;
+    --secondary: 180 25% 90%;
+    --secondary-foreground: 215 25% 27%;
 
-    --muted: 28 20% 95%;
-    --muted-foreground: 343 8% 45%;
+    --muted: 210 15% 95%;
+    --muted-foreground: 215 15% 45%;
 
-    --accent: 12 100% 88%;
-    --accent-foreground: 343 15% 15%;
+    --accent: 190 50% 85%;
+    --accent-foreground: 215 25% 27%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 28 15% 90%;
-    --input: 28 15% 90%;
-    --ring: 12 88% 70%;
+    --border: 210 20% 88%;
+    --input: 210 20% 88%;
+    --ring: 200 80% 60%;
 
     --radius: 1rem;
 
-    /* Fashion-specific design tokens */
-    --gradient-primary: linear-gradient(135deg, hsl(12 88% 70%), hsl(342 75% 75%));
-    --gradient-soft: linear-gradient(180deg, hsl(28 100% 98%), hsl(28 50% 96%));
-    --gradient-accent: linear-gradient(135deg, hsl(88 25% 85%), hsl(88 30% 80%));
+    /* Cool, calm design tokens */
+    --gradient-primary: linear-gradient(135deg, hsl(200 80% 60%), hsl(220 70% 65%));
+    --gradient-soft: linear-gradient(180deg, hsl(210 20% 98%), hsl(210 30% 96%));
+    --gradient-accent: linear-gradient(135deg, hsl(190 50% 85%), hsl(200 45% 80%));
+    --gradient-cool: linear-gradient(135deg, hsl(180 60% 70%), hsl(200 50% 75%));
     
-    --shadow-elegant: 0 10px 40px -10px hsl(12 88% 70% / 0.25);
-    --shadow-soft: 0 4px 20px -5px hsl(343 15% 15% / 0.1);
-    --shadow-glow: 0 0 30px hsl(12 88% 70% / 0.3);
+    --shadow-elegant: 0 10px 40px -10px hsl(200 80% 60% / 0.2);
+    --shadow-soft: 0 4px 20px -5px hsl(215 25% 27% / 0.08);
+    --shadow-glow: 0 0 30px hsl(200 80% 60% / 0.25);
 
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
