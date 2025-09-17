@@ -154,3 +154,4 @@ export const OutfitPreview = ({ selectedItems, onPreview }: OutfitPreviewProps) 
     </Card>
   );
 };
+

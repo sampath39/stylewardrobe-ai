@@ -22,17 +22,17 @@ interface WardrobeItem {
 const mockItems: WardrobeItem[] = [
   {
     id: '1',
-    name: 'Black Blazer',
-    image: '/placeholder.svg',
-    category: 'Jackets',
-    color: 'Black',
+    name: 'Tshirt',
+    image: "https://i.imghippo.com/files/QtRB8668EPw.jpg",
+    category: 'Tshirts',
+    color: 'White',
     season: 'All',
     favorite: true,
   },
   {
     id: '2', 
     name: 'Blue Jeans',
-    image: '/placeholder.svg',
+    image: "https://i.imghippo.com/files/vswu2763Nc.webp",
     category: 'Pants',
     color: 'Blue',
     season: 'All',
@@ -40,10 +40,28 @@ const mockItems: WardrobeItem[] = [
   },
   {
     id: '3',
-    name: 'Summer Dress',
-    image: '/placeholder.svg',
+    name: 'Saree',
+    image: "https://i.imghippo.com/files/cAnw3121gnc.jpg",
+    category: 'Sarees',
+    color: 'Golden',
+    season: 'Spring',
+    favorite: true,
+  },
+  {
+    id: '4',
+    name: 'Dress',
+    image: "https://i.imghippo.com/files/HPdd4485vk.webp",
     category: 'Dresses',
-    color: 'Floral',
+    color: 'Red',
+    season: 'Winter',
+    favorite: true,
+  },
+  {
+    id: '5',
+    name: 'Kurta',
+    image: "https://i.imghippo.com/files/hqV9652CtA.jpg",
+    category: 'Kurtas',
+    color: 'Pink',
     season: 'Summer',
     favorite: true,
   },
@@ -60,7 +78,7 @@ export const WardrobeGrid = () => {
     image: '',
   });
 
-  const categories = ['All', 'Tops', 'Pants', 'Dresses', 'Jackets', 'Shoes', 'Accessories'];
+  const categories = ['All', 'Tops', 'Pants', 'Shirts', 'Dresses', 'Jackets', 'Shoes', 'Accessories', 'Kurtas', 'Sarees'];
   const seasons = ['All', 'Spring', 'Summer', 'Fall', 'Winter'];
 
   const filteredItems = selectedCategory === 'All' 
